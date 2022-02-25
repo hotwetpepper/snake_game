@@ -28,6 +28,11 @@ while True:
     body_snake.append((x, y))
     body_snake = body_snake[-length_snake:]
 
+    if body_snake[-1] == apple:
+        apple = randrange(0, WINDOW_WIDTH, OBJECT_SIZE), randrange(0, WINDOW_HEIGHT, OBJECT_SIZE)
+        length_snake += 1
+        fps += 1
+
     key = pygame.key.get_pressed()
 
     if key[pygame.K_w] and (dx, dy) != traffic_dict['S']:
@@ -41,16 +46,14 @@ while True:
 
     if x < 0 or x > WINDOW_WIDTH or y < 0 or y > WINDOW_HEIGHT:
         break
-    # Поедание змейкой самой себя
+
     if len(body_snake) != len(set(body_snake)):
         break
         
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             exit()
-    # Обновление экрана
+
     pygame.display.flip()
-    # Управление частотой кадров
     clock = pygame.time.Clock()
-    # Количество раз выполнения цикла в секунду
     clock.tick(2*fps)
